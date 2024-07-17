@@ -3,11 +3,13 @@ let turn=1;
 const players =  [
     {
         'name': 'Player 1',
-        'spaces': Array(9).fill(false)
+        'spaces': Array(9).fill(false),
+        'winner': false
     }, 
     {
         'name': 'Player 2',
-        'spaces': Array(9).fill(false)
+        'spaces': Array(9).fill(false),
+        'winner':false
     }
 
 ];
@@ -42,13 +44,10 @@ z.innerHTML='0'
  turn++;
  e.target.setAttribute('class', 'noClickSpace')
  verifyWin();
- if(turn>9){
-    alert('It has been a Draw' );
- }
+
 }
 
 function clear(){
-    console.log(players[0].spaces);
     players[1].spaces.fill(false);
     players[0].spaces.fill(false);
     Array.prototype.forEach.call(document.getElementById('grid').children, 
@@ -58,6 +57,8 @@ function (element){
     turn=1;
 }
 );
+players[0].winner=false;
+players[1].winner=false;
 }
 
 function verifyWin(){    
@@ -67,9 +68,14 @@ function verifyWin(){
             alert('The Winner is '+i.name);
             Array.prototype.forEach.call(document.getElementById('grid').children, 
              (element)=>element.setAttribute('class','noClickSpace'))
+             i.winner=true;
         }
+        
     }
    }
+   if(turn>9 &&players[0].winner==players[1].winner){
+    alert('It has been a Draw' );
+    }
 }
 
 
